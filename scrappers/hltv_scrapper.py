@@ -38,7 +38,7 @@ for row in rows:
     row_data = []
     columns = row.find_all('td')
     for column in columns:
-        if column.attrs["class"] == "teamCol": #os times estao como imagens, entao pegar o nome das imagens
+        if "teamCol" in column.attrs["class"]: #os times estao como imagens, entao pegar o nome das imagens
             imagens = column.find_all("a")
             teams = [x.attrs["href"].split("/")[-1] for x in imagens]
             row_data.append(teams)
