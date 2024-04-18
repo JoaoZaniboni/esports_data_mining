@@ -39,6 +39,6 @@ if response.status_code == 200:
     df = df.drop(columns=removed_columns)
     df = df.dropna(subset=['Player'])
     path = "../csvs/liquipedia_data.csv"
-    df.to_csv(path, index=False)
+    df.to_csv(path, index=False, sep=';')
 else:
     print("Failed to load the page:", response.status_code)
