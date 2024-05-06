@@ -9,7 +9,7 @@ import time
 driver = webdriver.Chrome()
 
 # URL da página que você quer acessar
-url = 'https://bo3.gg/players?period=all_time&tiers=s,a,b&games_count=200&tab=main&sort=rating&order=desc'
+url = 'https://bo3.gg/players?period=all_time&tiers=s,a,b&games_count=30&tab=main&sort=rating&order=desc'
 # Abre a página no navegador
 driver.get(url)
 driver.maximize_window()
@@ -19,7 +19,6 @@ action.move_by_offset(100, 100)  # Altere as coordenadas conforme necessário
 action.click()
 action.perform()
 while True:
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     time.sleep(2)
     try:
@@ -56,5 +55,5 @@ for row in rows:
 df = pd.DataFrame(data=all_rows_data, columns=columns_names)
 # df = df.drop(columns=removed_columns)
 df = df.dropna(subset=['Player'])
-path = "../csvs/bo_data.csv"
+path = "./csvs/bo_data.csv"
 df.to_csv(path, index=False, sep=';')
