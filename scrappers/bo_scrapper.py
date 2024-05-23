@@ -1,21 +1,18 @@
-import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 import time
-# Instancia um navegador (nesse caso, o Chrome)
 driver = webdriver.Chrome()
 
-# URL da página que você quer acessar
 url = 'https://bo3.gg/players?period=all_time&tiers=s,a,b&games_count=30&tab=main&sort=rating&order=desc'
 # Abre a página no navegador
 driver.get(url)
 driver.maximize_window()
 time.sleep(4)
 action = ActionChains(driver)
-action.move_by_offset(100, 100)  # Altere as coordenadas conforme necessário
+action.move_by_offset(100, 100)
 action.click()
 action.perform()
 while True:
@@ -27,9 +24,8 @@ while True:
     except Exception:
         break
     time.sleep(2)
-# Obtém o HTML da página
+
 html = driver.page_source
-# Fecha o navegador
 driver.quit()
 
 soup = BeautifulSoup(html, 'html.parser')
@@ -51,9 +47,9 @@ for row in rows:
         else:
             row_data.append(column.get_text())
     all_rows_data.append(row_data)
-#<td class="teamCol" data-sort="Vitality" style="padding-top: 0px; padding-bottom: 0px;">
 df = pd.DataFrame(data=all_rows_data, columns=columns_names)
 # df = df.drop(columns=removed_columns)
 df = df.dropna(subset=['Player'])
-path = "./csvs/bo_data.csv"
+df = df.drop(df.columns[0], axis=1)
+path = "../csvs/bo_data.csv"
 df.to_csv(path, index=False, sep=';')

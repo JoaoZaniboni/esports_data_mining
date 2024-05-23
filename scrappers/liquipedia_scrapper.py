@@ -4,15 +4,11 @@ import pandas as pd
 
 url = 'https://liquipedia.net/counterstrike/Portal:Statistics/Player_earnings'
 
-# Making the HTTP request
 response = requests.get(url)
 
-# Checking if the request was successful
 if response.status_code == 200:
-    # Parsing the HTML content
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Finding the first table on the page
     table = soup.find('table')
 
     rows = table.find_all('tr')

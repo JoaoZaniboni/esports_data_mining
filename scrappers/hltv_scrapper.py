@@ -4,21 +4,16 @@ import pandas as pd
 
 from selenium import webdriver
 
-# Instancia um navegador (nesse caso, o Chrome)
 driver = webdriver.Chrome()
 
-# URL da página que você quer acessar
 url = 'https://www.hltv.org/stats/players?minMapCount=200'
 
-# Abre a página no navegador
+
 driver.get(url)
-# Obtém o HTML da página
 html = driver.page_source
-# Fecha o navegador
 driver.quit()
 soup = BeautifulSoup(html, 'html.parser')
 
-# Finding the first table on the page
 table = soup.find('table',  class_ = 'stats-table player-ratings-table')
 
 rows = table.find_all('tr')
@@ -45,7 +40,6 @@ for row in rows:
         else:
             row_data.append(column.get_text())
     lines.append(row_data)
-#<td class="teamCol" data-sort="Vitality" style="padding-top: 0px; padding-bottom: 0px;">
 df = pd.DataFrame(data=lines, columns=column_names)
 # df = df.drop(columns=removed_columns)
 df = df.dropna(subset=['Player'])
